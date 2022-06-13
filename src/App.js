@@ -1,5 +1,6 @@
 import React from "react";
 import PromiseFile from "./page/PromiseFile";
+import AsyncAwaitFile from "./page/AsyncAwaitFile";
 
 const App = () => {
   return (
@@ -7,7 +8,7 @@ const App = () => {
       <div className="App">
         <h1>Hello App</h1>
       </div>
-      <PromiseFile />
+      <AsyncAwaitFile />
     </>
   );
 };
