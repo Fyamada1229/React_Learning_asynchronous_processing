@@ -1,6 +1,19 @@
 import React from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
 
-const AsyncAwaitFile = () => {
+const AsyncAwaitFile = ({ count, posts, increase, decreate }) => {
+  //const posts = useSelector((state) => state);
+
+  //const dispatch = useDispatch();
+  // const increase = () => {
+  //   dispatch({ type: "INCREASE_COUNT" });
+  // };
+  // const decreate = () => {
+  //   dispatch({ type: "DECREASE_COUNT" });
+  // };
+
+  console.log(count);
+
   // 非同期処理
   const asyncFunction = async () => {
     try {
@@ -9,10 +22,9 @@ const AsyncAwaitFile = () => {
       throw "reject";
     }
   };
-
   const main = async () => {
     const txt = await asyncFunction();
-    console.log(txt);
+    //console.log(txt);
   };
   main();
 
@@ -20,9 +32,31 @@ const AsyncAwaitFile = () => {
     <>
       <div>
         <h1>this is AsyncAwait file</h1>
+        <p>count:{count}</p>
+        <button onClick={increase}>Up</button>
+        <button onClick={decreate}>Down</button>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>{post.title}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
 };
 
-export default AsyncAwaitFile;
+const mapStateToProps = (state) => {
+  return {
+    count: state.countReducer.count,
+    posts: state.postsReducer.posts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increase: () => dispatch({ type: "INCREASE_COUNT" }),
+    decreate: () => dispatch({ type: "DECREASE_COUNT" }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AsyncAwaitFile);
