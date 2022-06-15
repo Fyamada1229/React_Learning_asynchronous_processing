@@ -1,25 +1,36 @@
 import React from "react";
 import PromiseFile from "./page/PromiseFile";
 import AsyncAwaitFile from "./page/AsyncAwaitFile";
+import Post from "./page/Post";
 import AxiosFile from "./page/AxiosFile";
 import { connect } from "react-redux";
 
-const App = (props) => {
-  const { count } = props;
-
+const App = ({ count, increase, decreate }) => {
   return (
     <>
       <div className="App">
         <h1>Hello App</h1>
+        <p>Count:{count}</p>
+        <button onClick={increase}>Up</button>
+        <button onClick={decreate}>Down</button>
       </div>
-      <p>Count:{count}</p>
-      <AsyncAwaitFile />
+      <div>
+        <h1></h1>
+        <Post />
+      </div>
     </>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { count: state.count };
+  return { count: state.countReducer.count };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increase: () => dispatch({ type: "INCREASE_COUNT" }),
+    decreate: () => dispatch({ type: "DECREASE_COUNT" }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
