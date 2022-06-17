@@ -17,8 +17,12 @@ const Post = () => {
   return (
     <div>
       <ul>
-        {posts.map((post) => (
-          <li key={post.id}>{post.title}</li>
+        {posts?.map((post) => (
+          <li key={post?.id}>
+            {post?.title}
+            <br />
+            {post?.body}
+          </li>
         ))}
       </ul>
     </div>
