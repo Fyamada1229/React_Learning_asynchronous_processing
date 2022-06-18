@@ -22,6 +22,8 @@ const Post = () => {
             {post?.title}
             <br />
             {post?.body}
+            <br />
+            {post?.userId}
           </li>
         ))}
       </ul>
