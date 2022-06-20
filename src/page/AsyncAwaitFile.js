@@ -3,8 +3,8 @@ import { connect, useSelector, useDispatch } from "react-redux";
 
 const AsyncAwaitFile = ({ count, posts, increase, decreate }) => {
   //const posts = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-  //const dispatch = useDispatch();
   // const increase = () => {
   //   dispatch({ type: "INCREASE_COUNT" });
   // };
