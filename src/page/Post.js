@@ -1,30 +1,33 @@
 import { useState, useEffect } from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
 
 const Post = () => {
-  const [posts, setPost] = useState();
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.postsReducer.posts);
+  const post = useSelector((state) => state);
+
+  console.log(post);
 
   useEffect(() => {
     const getPosts = async () => {
-      const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+      const res = await fetch("http://localhost:8000/api/list");
       const data = await res.json();
-      setPost(data);
+      dispatch({
+        type: "GET_POST_DATA",
+        payload: data,
+      });
     };
     getPosts();
-  }, []);
+  }, [dispatch]);
 
-  console.log(posts);
+  const dervice = posts.dervice;
 
   return (
     <div>
+      <h1>Post</h1>
       <ul>
-        {posts?.map((post) => (
-          <li key={post?.id}>
-            {post?.title}
-            <br />
-            {post?.body}
-            <br />
-            {post?.userId}
-          </li>
+        {dervice.map((post) => (
+          <li key={post.id}>{post.name}</li>
         ))}
       </ul>
     </div>
