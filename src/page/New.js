@@ -1,35 +1,30 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
+import { getPosts } from "../store/postsReducer";
 import { Link } from "react-router-dom";
 
 const New = (props) => {
-  // 非同期処理
-  const asyncFunction = async () => {
-    try {
-      return "resolve";
-    } catch (e) {
-      throw "reject";
-    }
-  };
-  const main = async () => {
-    const txt = await asyncFunction();
-    //console.log(txt);
-  };
-  main();
+  const dispatch = useDispatch();
+  const dervice = props.posts.dervice;
+  console.log(dervice);
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
 
   return (
     <>
       <div>
         <h1>welcome</h1>
         <h2>This is New file.</h2>
-        <Link to="/new">新規画面</Link>
+        <Link to="/">TOP画面</Link>
       </div>
     </>
   );
 };
 
 const mapStateToProps = (state) => ({
-  count: state.countReducer.count,
+  posts: state.postsReducer.posts,
 });
 
 const mapDispatchToProps = (dispatch) => ({

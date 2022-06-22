@@ -5,7 +5,6 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 const Post = (props) => {
   const dispatch = useDispatch();
-  //   const posts = useSelector((state) => state.postsReducer.posts);
   const dervice = props.posts.dervice;
   console.log(dervice);
   // Redux Thunksを使用getPostsを呼び出している
