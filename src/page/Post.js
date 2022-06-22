@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../store/postsReducer";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 const Post = (props) => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Post = (props) => {
   return (
     <div>
       <h1>dervice</h1>
+      <Link to="/new">新規画面</Link>
       <ul>
         {dervice?.map((post) => (
           <li key={post.id}>{post.name}</li>
