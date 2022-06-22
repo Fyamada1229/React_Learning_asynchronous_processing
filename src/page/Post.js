@@ -24,7 +24,7 @@ const Post = () => {
 
   return (
     <div>
-      <h1>Post</h1>
+      <h1>dervice</h1>
       <ul>
         {dervice.map((post) => (
           <li key={post.id}>{post.name}</li>
