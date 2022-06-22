@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../store/postsReducer";
 
-const Post = () => {
+const Post = (props) => {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.postsReducer.posts);
-  const dervice = posts?.dervice;
-
+  //   const posts = useSelector((state) => state.postsReducer.posts);
+  const dervice = props.posts.dervice;
+  console.log(dervice);
   // Redux Thunksを使用getPostsを呼び出している
   useEffect(() => {
     dispatch(getPosts());
@@ -25,8 +25,6 @@ const Post = () => {
   //     getPosts();
   //   }, [dispatch]);
 
-  console.log(dervice);
-
   return (
     <div>
       <h1>dervice</h1>
@@ -39,4 +37,15 @@ const Post = () => {
   );
 };
 
-export default Post;
+const mapStateToProps = (state) => ({
+  posts: state.postsReducer.posts,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increase: () => dispatch({ type: "INCREASE_COUNT" }),
+    decreate: () => dispatch({ type: "DECREASE_COUNT" }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);
