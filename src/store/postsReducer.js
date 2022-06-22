@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
 
 const initialState = {
   posts: [],
@@ -9,10 +10,21 @@ const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_POST_DATA":
       return { ...state, posts: action.payload };
-
     default:
       return state;
   }
+};
+
+// Redux Thunks 使用
+export const getPosts = () => {
+  return async (dispatch) => {
+    const res = await fetch("http://localhost:8000/api/list");
+    const data = await res.json();
+    dispatch({
+      type: "GET_POST_DATA",
+      payload: data,
+    });
+  };
 };
 
 // Redux使用しない場合

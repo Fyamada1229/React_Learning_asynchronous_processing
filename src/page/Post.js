@@ -1,32 +1,37 @@
 import { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
+import { getPosts } from "../store/postsReducer";
 
 const Post = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postsReducer.posts);
-  const post = useSelector((state) => state);
+  const dervice = posts?.dervice;
 
-  console.log(post);
-
+  // Redux Thunksを使用getPostsを呼び出している
   useEffect(() => {
-    const getPosts = async () => {
-      const res = await fetch("http://localhost:8000/api/list");
-      const data = await res.json();
-      dispatch({
-        type: "GET_POST_DATA",
-        payload: data,
-      });
-    };
-    getPosts();
+    dispatch(getPosts());
   }, [dispatch]);
 
-  const dervice = posts.dervice;
+  // Redux Thunks なしの場合
+  //   useEffect(() => {
+  //     const getPosts = async () => {
+  //       const res = await fetch("http://localhost:8000/api/list");
+  //       const data = await res.json();
+  //       dispatch({
+  //         type: "GET_POST_DATA",
+  //         payload: data,
+  //       });
+  //     };
+  //     getPosts();
+  //   }, [dispatch]);
+
+  console.log(dervice);
 
   return (
     <div>
       <h1>dervice</h1>
       <ul>
-        {dervice.map((post) => (
+        {dervice?.map((post) => (
           <li key={post.id}>{post.name}</li>
         ))}
       </ul>
