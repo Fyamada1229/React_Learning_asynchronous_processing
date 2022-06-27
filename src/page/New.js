@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 
 const New = (props) => {
   const dispatch = useDispatch();
-  const dervice = props.posts.dervice;
-  console.log(dervice);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -23,13 +21,6 @@ const New = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  posts: state.postsReducer.posts,
-});
+//const mapDispatchToProps = (dispatch) => ({ postNew });
 
-const mapDispatchToProps = (dispatch) => ({
-  increase: () => dispatch({ type: "INCREASE_COUNT" }),
-  decreate: () => dispatch({ type: "DECREASE_COUNT" }),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(New);
+export default connect(null, null)(New);
