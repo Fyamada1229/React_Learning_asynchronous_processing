@@ -34,6 +34,11 @@ const New = (props) => {
               type="text"
               component={this.test}
             />
+            <Field label="Body" name="body" type="text" component={this.test} />
+          </div>
+          <div>
+            <input type="submit" value="Submit" disabled={false} />
+            <Link to="/">キャンセル</Link>
           </div>
         </form>
       </div>
@@ -42,5 +47,9 @@ const New = (props) => {
 };
 
 //const mapDispatchToProps = (dispatch) => ({ postNew });
+const validate = (values) => {
+  const errors = {};
+  return errors;
+};
 
-export default connect(null, null)(New);
+export default connect(null, null)(reduxForm({ validate, form: "New" }))(New);
