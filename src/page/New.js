@@ -18,7 +18,11 @@ const New = (props) => {
       type,
       meta: { touched, error },
     } = field;
-    return <div></div>;
+    return (
+      <div>
+        <h1>テストを表示をする</h1>
+      </div>
+    );
   };
 
   return (
