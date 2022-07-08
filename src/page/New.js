@@ -56,4 +56,4 @@ const validate = (values) => {
   return errors;
 };
 
-export default connect(null, null)(reduxForm({ validate, form: "New" }))(New);
+export default reduxForm({ validate, form: "NewForm" })(New);
