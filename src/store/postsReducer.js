@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 const initialState = {
   posts: [],
@@ -22,6 +23,18 @@ export const getPosts = () => {
     const data = await res.json();
     dispatch({
       type: "GET_POST_DATA",
+      payload: data,
+    });
+  };
+};
+
+export const postPosts = (values) => {
+  console.log(values);
+  return async (dispatch) => {
+    const res = await axios.post("http://localhost:8000/api/store", values);
+    const data = res;
+    dispatch({
+      type: "POST_DATA",
       payload: data,
     });
   };

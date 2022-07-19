@@ -1,49 +1,66 @@
 import { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
-import { getPosts } from "../store/postsReducer";
-import { Field, reduxForm } from "redux-form";
+import { postPosts } from "../store/postsReducer";
+import { Field, reduxForm, Fields, touch } from "redux-form";
 import { Link } from "react-router-dom";
+import { values } from "redux-form";
 
 const New = (props) => {
   const dispatch = useDispatch();
+  const [name, setName] = useState();
+  const [menber_id, setMenberId] = useState();
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
-
-  const test = (field) => {
+  const renderField = (field) => {
     const {
       input,
       label,
       type,
       meta: { touched, error },
     } = field;
+
     return (
       <div>
-        <h1>テストを表示をする</h1>
+        <input {...input} placeholder={label} type={type} />
+        {touched && error && <span>{error}</span>}
       </div>
     );
+  };
+
+  const onPost = (e) => {
+    e.preventDefault();
+    const postData = {
+      name: "山田",
+      menber_id: 1,
+    };
+    dispatch(postPosts(postData));
   };
 
   return (
     <>
       <div>
-        <h2>This is New file.</h2>
-        <Link to="/">TOP画面</Link>
-        <form>
+        <h2>This is New file. You name?</h2>
+        <form onSubmit={onPost}>
+          <Link to="/">TOP画面</Link>
           <div>
             <Field
-              label="Title"
-              name="title"
+              label="name"
+              name="name"
               type="text"
-              component={this.test}
+              component={renderField}
+              onChange={(e) => setName(e.target.value)}
             />
-            <Field label="Body" name="body" type="text" component={this.test} />
           </div>
           <div>
-            <input type="submit" value="Submit" disabled={false} />
-            <Link to="/">キャンセル</Link>
+            <Field
+              label="menber_id"
+              name={menber_id}
+              type="text"
+              component={renderField}
+              onChange={(e) => setMenberId(e.target.value)}
+            />
           </div>
+          <input type="submit" value="Submit" disabled={false} />
+          <Link to="/">キャンセル</Link>
         </form>
       </div>
     </>
@@ -53,7 +70,28 @@ const New = (props) => {
 //const mapDispatchToProps = (dispatch) => ({ postNew });
 const validate = (values) => {
   const errors = {};
+
+  console.log(values.name);
+
+  if (!values.name) {
+    errors.name = "名前が入力されていません";
+  }
+  if (!values.menber_id) {
+    errors.menber_id = "名前IDが入力されていません";
+  }
+
   return errors;
 };
 
-export default reduxForm({ validate, form: "NewForm" })(New);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSubmit: (values) => {
+      dispatch(postPosts(values));
+    },
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(reduxForm({ validate, form: "NewForm" })(New));
