@@ -1,46 +1,36 @@
 import { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { postPosts } from "../store/postsReducer";
-import { Field, reduxForm, Fields, touch } from "redux-form";
+import { Field, reduxForm, getFormValues } from "redux-form";
 import { Link } from "react-router-dom";
 import { values } from "redux-form";
 
 const New = (props) => {
+  const formValues = useSelector(
+    (state) => getFormValues(props.form)(state) || {}
+  );
   const dispatch = useDispatch();
   const [name, setName] = useState();
   const [menber_id, setMenberId] = useState();
 
-  const renderField = (field) => {
-    const {
-      input,
-      label,
-      type,
-      meta: { touched, error },
-    } = field;
-
-    return (
-      <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched && error && <span>{error}</span>}
-      </div>
-    );
-  };
+  console.log(formValues.name);
 
   const onPost = (e) => {
     e.preventDefault();
     const postData = {
-      name: "山田",
-      menber_id: 1,
+      name,
+      menber_id,
     };
     dispatch(postPosts(postData));
+    props.history.push("/");
   };
 
   return (
     <>
       <div>
         <h2>This is New file. You name?</h2>
+        <Link to="/">TOP画面</Link>
         <form onSubmit={onPost}>
-          <Link to="/">TOP画面</Link>
           <div>
             <Field
               label="name"
@@ -53,25 +43,38 @@ const New = (props) => {
           <div>
             <Field
               label="menber_id"
-              name={menber_id}
+              name="menber_id"
               type="text"
               component={renderField}
               onChange={(e) => setMenberId(e.target.value)}
             />
           </div>
           <input type="submit" value="Submit" disabled={false} />
-          <Link to="/">キャンセル</Link>
         </form>
+        <Link to="/">キャンセル</Link>
       </div>
     </>
   );
 };
 
-//const mapDispatchToProps = (dispatch) => ({ postNew });
+const renderField = (field) => {
+  const {
+    input,
+    label,
+    type,
+    meta: { touched, error },
+  } = field;
+
+  return (
+    <div>
+      <input {...input} placeholder={label} type={type} />
+      {touched && error && <span>{error}</span>}
+    </div>
+  );
+};
+
 const validate = (values) => {
   const errors = {};
-
-  console.log(values.name);
 
   if (!values.name) {
     errors.name = "名前が入力されていません";
@@ -79,15 +82,16 @@ const validate = (values) => {
   if (!values.menber_id) {
     errors.menber_id = "名前IDが入力されていません";
   }
-
   return errors;
 };
 
+//ここでReduxに上手く渡せていない。
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (values) => {
-      dispatch(postPosts(values));
-    },
+    // onSubmit: (values) => {
+    //   console.log(values);
+    //   dispatch(postPosts(values));
+    // },
   };
 };
 
