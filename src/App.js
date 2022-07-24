@@ -1,9 +1,10 @@
 import React from "react";
 import PromiseFile from "./page/PromiseFile";
+import { useState, useEffect } from "react";
 import AsyncAwaitFile from "./page/AsyncAwaitFile";
 import Post from "./page/Post";
 import AxiosFile from "./page/AxiosFile";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 
 const App = ({ count, increase, decreate }) => {
   return (

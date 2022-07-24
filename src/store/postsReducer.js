@@ -29,7 +29,6 @@ export const getPosts = () => {
 };
 
 export const postPosts = (values) => {
-  console.log(values);
   return async (dispatch) => {
     const res = await axios.post("http://localhost:8000/api/store", values);
     const data = res;

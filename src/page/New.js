@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { postPosts } from "../store/postsReducer";
 import { Field, reduxForm, getFormValues } from "redux-form";
 import { Link } from "react-router-dom";
-import { values } from "redux-form";
+import { useNavigate } from "react-router-dom";
 
 const New = (props) => {
   const formValues = useSelector(
@@ -12,18 +12,22 @@ const New = (props) => {
   const dispatch = useDispatch();
   const [name, setName] = useState();
   const [menber_id, setMenberId] = useState();
+  const navigate = useNavigate();
 
   console.log(formValues.name);
 
   const onPost = (e) => {
+    console.log(props);
     e.preventDefault();
     const postData = {
       name,
       menber_id,
     };
     dispatch(postPosts(postData));
-    props.history.push("/");
+    navigate("/");
   };
+
+  console.log(useSelector((state) => state.postsReducer.posts.derivice));
 
   return (
     <>
@@ -88,14 +92,17 @@ const validate = (values) => {
 //ここでReduxに上手く渡せていない。
 const mapDispatchToProps = (dispatch) => {
   return {
-    // onSubmit: (values) => {
-    //   console.log(values);
-    //   dispatch(postPosts(values));
-    // },
+    onSubmit: () => {
+      dispatch(postPosts());
+    },
   };
 };
 
+const mapStateToProps = (state) => {
+  return { value: state.postsReducer.posts.derivice };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(reduxForm({ validate, form: "NewForm" })(New));
