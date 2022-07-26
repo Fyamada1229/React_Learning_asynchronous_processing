@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { postPosts } from "../store/postsReducer";
 import { Field, reduxForm, getFormValues } from "redux-form";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const New = (props) => {
   const formValues = useSelector(
@@ -12,7 +12,7 @@ const New = (props) => {
   const dispatch = useDispatch();
   const [name, setName] = useState();
   const [menber_id, setMenberId] = useState();
-  const navigate = useNavigate();
+  const history = useHistory();
 
   console.log(formValues.name);
 
@@ -23,8 +23,9 @@ const New = (props) => {
       name,
       menber_id,
     };
-    dispatch(postPosts(postData));
-    navigate("/");
+    dispatch(postPosts(postData)).then(() => {
+      history.push("/"); // ここでcreateのactionが終わった後でpushする
+    });
   };
 
   console.log(useSelector((state) => state.postsReducer.posts.derivice));
@@ -98,11 +99,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = (state) => {
-  return { value: state.postsReducer.posts.derivice };
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(reduxForm({ validate, form: "NewForm" })(New));
