@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { postPosts } from "../store/postsReducer";
 import { Field, reduxForm, getFormValues } from "redux-form";

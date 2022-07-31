@@ -7,17 +7,14 @@ import AxiosFile from "./page/AxiosFile";
 import { connect, useSelector, useDispatch } from "react-redux";
 
 const App = ({ count, increase, decreate }) => {
+  console.log(useSelector((state) => state.postsReducer.posts.decreate));
   return (
     <>
       <div className="App">
-        <h1>Hello App</h1>
-        <p>Count:{count}</p>
-        <button onClick={increase}>Up</button>
-        <button onClick={decreate}>Down</button>
-      </div>
-      <div>
-        <h1></h1>
-        <Post />
+        <div>
+          <h1></h1>
+          <Post />
+        </div>
       </div>
     </>
   );
